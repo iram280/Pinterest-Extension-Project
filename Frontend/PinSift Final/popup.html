@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PinSift</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header__section">
+                <h1>PinSift</h1>
+                <div class="header__section-dropdown">
+                    <button>Category<i class="fa-solid fa-caret-down"></i></button>
+                    <div class="header__section-dropdown--list">
+                        <ul>
+                            <li id="categoryMen">Men</li>
+                            <li id="categoryWomen">Women</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="section-break"></div>
+        </div>
+    </header>
+    <div class="products">
+        <div class="container">
+            <div class="products__container">
+            </div>
+        </div>
+    </div>
+    <div class="result">
+        <div class="container">
+            <div class="result__container">
+                <div class="result__scan">
+                    <img src="images/pin-icon.svg">
+                </div>
+                <div class="result__desc">
+                    <h5>Analyze Board <i class="fa-solid fa-arrow-trend-up"></i></h5>
+                    <h1></h1>
+                </div>
+                <div class="result__filter">
+                    <div class="result__filter-icons">
+                        <img id="shirt" class="clothes active" src="images/shirt.svg">
+                        <img id="pants" class="clothes hidden" src="images/pants.svg">
+                        <img id="shoes" class="clothes hidden" src="images/shoes.svg">
+                    </div>
+                    <div class="result__filter-btns">
+                        <button><img src="images/arrow-up.svg"></button>
+                        <button><img src="images/arrow-down.svg"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
