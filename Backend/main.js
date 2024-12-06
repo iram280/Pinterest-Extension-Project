@@ -1,25 +1,23 @@
 const puppeteer = require('puppeteer');
 
 (async () => {
-  const browser = await puppeteer.launch({ headless: true });
-  const page = await browser.newPage();
-  
-  // Navigate to the Pinterest board (or your target page)
-  await page.goto('https://www.pinterest.com/NoMyCheesy/f-l-o-w-e-r-s/');
-  
-  // Wait for the sticky bar element using XPath
-  const xpath = 'html/body/div[1]/div/div[1]/div/div[1]/div[2]/div/div/div[2]/div/div';
-  
-  // Wait for the element using XPath, page.$x returns an array of elements
-  const elements = await page.waitForSelector(xpath);
+    const browser = await puppeteer.launch({
+        headless: false
+    });
+    const page = await browser.newPage();
 
-  // Check if any elements were found
-  if (elements.length > 0) {
-      const element = elements[0]; // Get the first matched element
-      await element.evaluate(el => el.remove()); // Remove it from the DOM
-  } else {
-      console.log("Element not found");
-  }
+    // Navigate to the Pinterest board
+    await page.goto('https://www.pinterest.com/NoMyCheesy/grunge-demo-board/', {
+        waitUntil: 'domcontentloaded'
+    });
+
+    // Set initial viewport size
+    await page.setViewport({
+        width: 1920,
+        height: 2500
+    });
+
+
     // Zoom out (e.g., 50% zoom)
     await page.evaluate(() => {
         document.body.style.zoom = '0.5'; // Zoom out to 50%
@@ -40,7 +38,7 @@ const puppeteer = require('puppeteer');
     });
 
     await browser.close();
-    console.log('Screenshot saved as yoursite.png');
+    console.log('YAY! Screenshot successfully saved: yoursite.png');
 })();
 
 // Function to scroll down the page
