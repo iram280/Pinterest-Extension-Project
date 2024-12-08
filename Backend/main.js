@@ -1,6 +1,13 @@
 const puppeteer = require('puppeteer');
 
 (async () => {
+
+    const boardUrl = process.argv[2]; // Get URL from command-line args
+    if (!boardUrl) {
+      console.error("No Pinterest board URL provided!");
+      process.exit(1);
+    }
+
     const browser = await puppeteer.launch({
         headless: false
     });
