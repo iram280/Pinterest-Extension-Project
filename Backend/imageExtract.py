@@ -16,7 +16,7 @@ def rescaleFrame(frame, scale=0.80):
 
 def extractImages():
     # Rescaling and cropping
-    image = cv.imread('test_2.jpg')
+    image = cv.imread('webpage.jpg')
     resized_image = rescaleFrame(image, 0.50)
     cropped_image = resized_image[110:-20, 30:]
 
@@ -82,21 +82,27 @@ def extractImages():
 
     # Drawing the num_pins amount of rectangles onto a prior image to check accuracy
     relative_index = 0
+    real_rects = [];
+
     for index in empty_rect:
     
         x, y, w, h = bounding_rects[index[0]]
+        real_rects.append(bounding_rects[index[0]])
+
         cv.rectangle(gray, (x,y), (x + w, y + h), (0, 255, 0), 1)
         cv.putText(gray, f'{relative_index}', (x + 10, y -5), cv.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 1)
         relative_index += 1
         
     cropped_region_pil = []
-        
-    for rect in bounding_rects:
-        x1, y1, x2, y2 = rect
-        
-        cropped_region = cropped_image[y1:y2, x1:x2]
-        
-        cropped_region_pil.append(Image.fromarray(cropped_region))
+    
+    
+
+
+    for rect in real_rects:
+        x, y, w, h = rect  # Unpack bounding box coordinates
+        cropped_region = cropped_image[y:y+h, x:x+w]  # Corrected cropping (y:y+h, x:x+w)
+    
+        cropped_region_pil.append(Image.fromarray(cropped_region))  # Convert to PIL image
         
     
 
@@ -107,8 +113,6 @@ def extractImages():
     cv.imshow('contours', blank_one)
 
     cv.imshow('blur webpage canny', canny)
-
-    cv.waitKey(0)
     
     return(cropped_region_pil)
 
