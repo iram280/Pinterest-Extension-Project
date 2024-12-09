@@ -29,7 +29,7 @@ const puppeteer = require("puppeteer");
   });
 
   // Scroll to load more pins
-  await autoScroll(page, 15); // Limit to 15 scrolls
+  await autoScroll(page, 7); // Limit to 7 scrolls
 
   // Wait for images and network to stabilize
   await page.waitForFunction(
@@ -68,10 +68,8 @@ const puppeteer = require("puppeteer");
   });
 
   const result = await response.json();
-  
 
   await browser.close();
-  
 })();
 
 // Function to fix base64 padding
