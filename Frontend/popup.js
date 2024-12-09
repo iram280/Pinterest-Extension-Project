@@ -162,14 +162,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Sets the keyword when the scan button is clicked and calls the functions that display the products
     document.querySelector(".result__scan").addEventListener("click", () => {
-      const selectedCategory = checkFilter(); // Get the active category
-      const boardUrl = window.location.href; // Assuming the board URL is the current page's URL
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const boardUrl = tabs[0].url;
+        // Get the URL of the active tab
+        console.log(boardUrl);
 
-      // Call fetchResults to interact with Flask and get product data
-      const keyword = fetchResults(keyword, selectedCategory, boardUrl);
+        // Call fetchResults to interact with Flask and get product data
+        const keyword = fetchResults(boardUrl);
 
-      // Display the result (you can customize this function)
-      displayResult(keyword);
+        // Display the result (you can customize this function)
+        displayResult(keyword);
+      });
     });
 
     // Function dynamically displays products

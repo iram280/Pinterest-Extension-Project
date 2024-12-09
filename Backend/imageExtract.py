@@ -14,10 +14,14 @@ def rescaleFrame(frame, scale=0.80):
     return cv.resize(frame, dimensions, interpolation=cv.INTER_AREA)
 
 
-def extractImages():
+def extractImages(screenshot):
     # Rescaling and cropping
-    image = cv.imread('webpage.jpg')
-    resized_image = rescaleFrame(image, 0.50)
+    image = np.array(screenshot)
+    
+    # Convert RGB to BGR (OpenCV uses BGR by default)
+    opencv_image = cv.cvtColor(image, cv.COLOR_RGB2BGR)
+
+    resized_image = rescaleFrame(opencv_image, 0.50)
     cropped_image = resized_image[110:-20, 30:]
 
     cv.imshow('inital crop', cropped_image)
@@ -82,7 +86,7 @@ def extractImages():
 
     # Drawing the num_pins amount of rectangles onto a prior image to check accuracy
     relative_index = 0
-    real_rects = [];
+    real_rects = []
 
     for index in empty_rect:
     
