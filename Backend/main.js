@@ -68,10 +68,10 @@ const puppeteer = require("puppeteer");
   });
 
   const result = await response.json();
-  //console.log("Flask Response:", result);
+  
 
   await browser.close();
-  //console.log("Screenshot successfully sent to Flask backend!");
+  
 })();
 
 // Function to fix base64 padding

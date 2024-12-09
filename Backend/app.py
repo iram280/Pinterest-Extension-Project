@@ -16,21 +16,16 @@ CORS(app, origins=["chrome-extension://caomgookpgdkaoliabljgmejoiknhlmg"])
 def process_image():
     try:
         
-        # Handle CORS preflight request
         if request.method == 'OPTIONS':
             return jsonify({"message": "Preflight request successful"}), 200
         
-        # Step 1: Get the board URL from the frontend
         board_url = request.json.get('url')  # URL from the frontend
         if not board_url:
             return jsonify({"error": "No URL provided"}), 400
 
-        # Step 2: Run Puppeteer script from Flask
         puppeteer_script = './Backend/main.js'  # Path to the Puppeteer script
 
-
         print("Running puppeteer script")
-        print(board_url)
         # Run the Puppeteer script using subprocess
         result = subprocess.run(['node', puppeteer_script, board_url], capture_output=True, text=True)
 
@@ -38,19 +33,12 @@ def process_image():
             return jsonify({"error": "Error running Puppeteer script", "details": result.stderr}), 500
 
         print("Retrieving image")
-        # Step 3: Retrieve the screenshot from Puppeteer (sent to Flask)
+        
         image_base64 = result.stdout.strip()  # Assuming Puppeteer outputs base64 directly
         if not image_base64:
             return jsonify({"error": "No image generated"}), 500
 
-        
-        
-        
-        
         print("Decoding base image")
-        #print(image_base64)
-        print("That was the encoding")
-        # Step 4: Decode the base64 image
         image_data = base64.b64decode(fix_base64_padding(image_base64))
         
         print("Opening image with PIL")
@@ -59,15 +47,11 @@ def process_image():
             print(f"Image format: {image.format}")
         except Exception as e:
             print(f"Error processing image: {e}")
-        
-        print("Step 4 done")
-        # Step 2: Extract images from the screenshot or board
+                
         extracted_images = imageExtract.extractImages(image)
-
-        # Step 3: Analyze the extracted images (e.g., using CLIP)
+        
         analysis_results = analysis.processImage(extracted_images)
 
-        # Step 4: Prepare response data (for now, just the analysis results)
         return jsonify({"analysis_results": analysis_results}), 200
 
     except Exception as e:
